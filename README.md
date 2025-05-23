@@ -15,7 +15,7 @@
 ---
 
 <p align="center">
-  <img src="/src/assets/01.jpg" alt="Banered Showcase" width="500"/>
+  <img src="/src/assets/01.jpg" alt="Banered Showcase" width="1000"/>
 </p>
 
 Banered é um editor de banners HTML interativo que permite criar e personalizar banners de forma visual e intuitiva. Arraste e solte elementos, edite textos, imagens, fundos e muito mais, com opções avançadas de exportação.
