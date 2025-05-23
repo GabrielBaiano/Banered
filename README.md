@@ -1,15 +1,15 @@
 <p align="center">
-  <img src="/src/assets/icon.png" alt="Banered Showcase" width="600"/>
+  <img src="/src/assets/icon.png" alt="Banered Showcase" width="200"/>
 </p>
 
 <h1 align="center">Banered</h1>
 
 <p align="center">
-  <a href="LINK_PARA_SEU_REPOSITORIO_OU_SITE" target="_blank">Projeto</a>
+  <a href="https://github.com/GabrielBaiano/Banered" target="_blank">Projeto no GitHub</a>
   &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="LINK_PARA_SEU_LINKEDIN_OU_CONTATO" target="_blank">Contato</a>
+  <a href="https://github.com/GabrielBaiano/Banered/issues/new?title=Sugest%C3%A3o%20de%20Melhoria%20para%20Banered&body=**Descreva%20sua%20ideia%20ou%20sugest%C3%A3o%20aqui%3A**%0A%0A%0A**Qual%20problema%20isso%20resolveria%3F**%0A%0A%0A**Alguma%20outra%20informa%C3%A7%C3%A3o%20relevante%3F**%0A" target="_blank">Reportar Bug / Sugestão</a>
   &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="LINK_PARA_OUTRO_RECURSO_IMPORTANTE" target="_blank">Documentação (Exemplo)</a>
+  <a href="https://www.linkedin.com/in/gabriel-nascimento-gama-5b0b30185/" target="_blank">Linkedin</a>
 </p>
 
 ---
