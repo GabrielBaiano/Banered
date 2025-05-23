@@ -20,7 +20,7 @@ interface BannerPreviewProps {
     // Props adicionais se necessário no futuro
 }
 
-const BannerPreview = React.forwardRef<HTMLDivElement, BannerPreviewProps>((props, ref) => {
+const BannerPreview = React.forwardRef<HTMLDivElement, BannerPreviewProps>((_props, ref) => {
     const { settings, addBlock, updateBlock } = useBanner();
 
     const [draggingBlockId, setDraggingBlockId] = useState<string | null>(null);
@@ -276,13 +276,11 @@ const EditorPageContent: React.FC = () => {
 
         try {
             const canvas = await html2canvas(captureElement, {
-                scale: 1, 
+                 
                 width: Math.round(rect.width), 
                 height: Math.round(rect.height),
                 useCORS: true, 
-                backgroundColor: finalBackgroundColorForCanvasOption,
                 logging: false, 
-                removeContainer: true,
             });
 
             // Restaura o estilo do elemento original o mais rápido possível

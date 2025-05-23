@@ -1,3 +1,4 @@
+// src/features/bannerEditor/components/HtmlBlocksPanel/AddedBlockItem.tsx
 import React, { type ChangeEvent } from 'react';
 import type { BannerBlock, TextContentBlock, ImageContentBlock } from '../../types/bannerContentTypes';
 import { useBanner } from '../../contexts/BannerContext';
@@ -18,41 +19,59 @@ const AddedBlockItem: React.FC<AddedBlockItemProps> = ({ block }) => {
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value, type } = event.target;
-    let finalValue: string | number | boolean = value;
+    const { name, value, type: inputType } = event.target;
+    let processedValue: string | number | boolean = value;
 
-    if (type === 'number') {
+    if (inputType === 'number') {
       const numVal = parseFloat(value);
       if (name === 'fontSize' || name === 'lineHeight') {
-        finalValue = isNaN(numVal) || numVal <= 0 ? (name === 'fontSize' ? 16 : 1.5) : numVal;
+        processedValue = isNaN(numVal) || numVal <= 0 ? (name === 'fontSize' ? 16 : 1.5) : numVal;
       } else { // para x, y
-        finalValue = isNaN(numVal) ? 0 : numVal;
+        processedValue = isNaN(numVal) ? 0 : numVal;
       }
     }
-    
-    let updatePayload: Partial<BannerBlock> = { [name]: finalValue };
 
-    if (name === 'fontSize' && typeof finalValue === 'number') {
-        updatePayload = { ...updatePayload, [name]: `${finalValue}px` };
-    } else if (name === 'lineHeight' && typeof finalValue === 'number') {
-        updatePayload = { ...updatePayload, [name]: finalValue };
+    // Criar um objeto com a propriedade específica a ser atualizada
+    let changedProperty: { [key: string]: any } = { [name]: processedValue };
+
+    if (name === 'fontSize' && typeof processedValue === 'number') {
+        changedProperty = { [name]: `${processedValue}px` };
+    } else if (name === 'lineHeight' && typeof processedValue === 'number') {
+        // lineHeight é unitless ou pode ter unidade; aqui estamos tratando como unitless se o input for number
+        changedProperty = { [name]: processedValue };
     } else if ((name === 'width' || name === 'height') && block.type === 'image') {
         const numVal = parseFloat(value);
-        if (!isNaN(numVal) && String(value).match(/^\d+(\.\d+)?$/)) { // Se for apenas número (com ou sem decimal)
-            updatePayload = { ...updatePayload, [name]: `${numVal}px`};
+        if (!isNaN(numVal) && String(value).match(/^\d+(\.\d+)?$/)) {
+            changedProperty = { [name]: `${numVal}px`};
         } else if (value.trim().toLowerCase() === 'auto' || value.includes('%')) {
-            updatePayload = { ...updatePayload, [name]: value };
+            changedProperty = { [name]: value };
         } else if (value.trim() === '') {
-             updatePayload = { ...updatePayload, [name]: 'auto'};
+             changedProperty = { [name]: 'auto'};
         } else {
-            // Mantém o valor como está se não for um número claro, 'auto' ou '%'
-            // Isso permite que o usuário digite '150px' diretamente se quiser,
-            // mas a conversão para número + 'px' acima é mais robusta se ele só digitar números.
-             updatePayload = { ...updatePayload, [name]: value };
+             changedProperty = { [name]: value }; // Mantém como string se não for numérico claro, auto ou %
         }
     }
 
-    updateBlock({ ...block, ...updatePayload });
+    // Construir o objeto atualizado explicitamente baseado no tipo do bloco
+    let updatedBlockData: BannerBlock;
+
+    if (block.type === 'text' || block.type === 'heading' || block.type === 'list') {
+        updatedBlockData = {
+            ...block, // Espalha o bloco TextContentBlock original
+            ...changedProperty, // Sobrescreve com a propriedade alterada
+        } as TextContentBlock; // Afirma o tipo
+    } else if (block.type === 'image') {
+        updatedBlockData = {
+            ...block, // Espalha o bloco ImageContentBlock original
+            ...changedProperty, // Sobrescreve com a propriedade alterada
+        } as ImageContentBlock; // Afirma o tipo
+    } else {
+        // Fallback improvável se o tipo de bloco for desconhecido, mas para segurança:
+        console.error("Tipo de bloco desconhecido ao tentar atualizar:", block);
+        return;
+    }
+    
+    updateBlock(updatedBlockData);
   };
   
   const handleStyleToggle = (styleProp: 'fontWeight' | 'fontStyle', activeValue: string, defaultValue: string) => {
@@ -87,7 +106,13 @@ const AddedBlockItem: React.FC<AddedBlockItemProps> = ({ block }) => {
                     newHeight = MAX_EDIT_DIM;
                 }
             }
-            updateBlock({ ...block, src: dataUrl, alt: file.name, width: newWidth, height: newHeight } as ImageContentBlock);
+            updateBlock({ 
+                ...(block as ImageContentBlock), // Afirma o tipo aqui também
+                src: dataUrl, 
+                alt: file.name, 
+                width: newWidth, 
+                height: newHeight 
+            });
         }
         img.src = dataUrl;
       };
@@ -123,7 +148,7 @@ const AddedBlockItem: React.FC<AddedBlockItemProps> = ({ block }) => {
             <select id={`fontFamily-${block.id}`} name="fontFamily" value={textBlock.fontFamily || ''} onChange={handleInputChange} >
                 <option value="">Padrão do Banner ({bannerSettings.fontFamily.split(',')[0]})</option>
                 {[bannerSettings.fontFamily, 'Arial, sans-serif', 'Verdana, sans-serif', 'Georgia, serif', 'Times New Roman, Times, serif', 'Courier New, Courier, monospace']
-                    .filter((font, index, self) => font && self.indexOf(font) === index) // Remove duplicatas e undefined
+                    .filter((font, index, self) => font && self.indexOf(font) === index)
                     .map(font => (<option key={font} value={font}>{font.split(',')[0]}</option>))}
             </select>
         </div>
@@ -143,55 +168,21 @@ const AddedBlockItem: React.FC<AddedBlockItemProps> = ({ block }) => {
       <>
         <div className="setting-group">
           <label htmlFor={`imageFile-${block.id}`}>TROCAR IMAGEM (UPLOAD):</label>
-          <input
-            type="file"
-            id={`imageFile-${block.id}`}
-            name="imageFile"
-            accept="image/*"
-            onChange={handleImageFileChange}
-            style={{marginBottom: '10px'}}
-          />
+          <input type="file" id={`imageFile-${block.id}`} name="imageFile" accept="image/*" onChange={handleImageFileChange} style={{marginBottom: '10px'}} />
           <label htmlFor={`src-display-${block.id}`} style={{fontSize: '0.7rem', opacity: 0.7}}>URL ATUAL / NOME:</label>
-          <input
-            type="text"
-            id={`src-display-${block.id}`}
-            value={imageBlock.src.startsWith('data:') ? (imageBlock.alt || 'Imagem Carregada Localmente') : imageBlock.src}
-            readOnly
-            style={{fontSize: '0.7rem', opacity: 0.7, border: 'none', background: 'transparent', paddingLeft: 0}}
-          />
+          <input type="text" id={`src-display-${block.id}`} value={imageBlock.src.startsWith('data:') ? (imageBlock.alt || 'Imagem Carregada Localmente') : imageBlock.src} readOnly style={{fontSize: '0.7rem', opacity: 0.7, border: 'none', background: 'transparent', paddingLeft: 0}}/>
         </div>
         <div className="setting-group">
-          <label htmlFor={`width-${block.id}`}>LARGURA (PX OU % OU 'AUTO'):</label> {/* Permitindo % */}
-          <input
-            type="text"
-            id={`width-${block.id}`}
-            name="width"
-            value={String(imageBlock.width ?? 'auto')}
-            onChange={handleInputChange}
-            placeholder="Ex: 150, 150px, 50%, auto"
-          />
+          <label htmlFor={`width-${block.id}`}>LARGURA (PX OU % OU 'AUTO'):</label>
+          <input type="text" id={`width-${block.id}`} name="width" value={String(imageBlock.width ?? 'auto')} onChange={handleInputChange} placeholder="Ex: 150, 150px, 50%, auto"/>
         </div>
         <div className="setting-group">
-          <label htmlFor={`height-${block.id}`}>ALTURA (PX OU % OU 'AUTO'):</label> {/* Permitindo % */}
-          <input
-            type="text"
-            id={`height-${block.id}`}
-            name="height"
-            value={String(imageBlock.height ?? 'auto')}
-            onChange={handleInputChange}
-            placeholder="Ex: 100, 100px, auto"
-          />
+          <label htmlFor={`height-${block.id}`}>ALTURA (PX OU % OU 'AUTO'):</label>
+          <input type="text" id={`height-${block.id}`} name="height" value={String(imageBlock.height ?? 'auto')} onChange={handleInputChange} placeholder="Ex: 100, 100px, auto"/>
         </div>
         <div className="setting-group">
           <label htmlFor={`alt-${block.id}`}>TEXTO ALTERNATIVO:</label>
-          <input
-            type="text"
-            id={`alt-${block.id}`}
-            name="alt"
-            value={imageBlock.alt || ''}
-            onChange={handleInputChange}
-            placeholder="Descrição da imagem..."
-          />
+          <input type="text" id={`alt-${block.id}`} name="alt" value={imageBlock.alt || ''} onChange={handleInputChange} placeholder="Descrição da imagem..." />
         </div>
       </>
     );

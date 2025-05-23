@@ -1,6 +1,6 @@
-import React, { ChangeEvent } from 'react'; // Adicione ChangeEvent
+import React, { type ChangeEvent } from 'react'; // Adicione ChangeEvent
 import { useBanner } from '../../contexts/BannerContext';
-import type { BannerSettings } from '../../contexts/BannerContext'; // Importe BannerSettings
+// import type { BannerSettings } from '../../contexts/BannerContext'; // Importe BannerSettings
 
 interface DimensionInputGroupProps {
   label: string;
