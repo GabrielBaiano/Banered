@@ -1,4 +1,4 @@
-import React, { DragEvent } from 'react';
+import React, { type DragEvent } from 'react';
 import type { TextContentBlock } from '../../types/bannerContentTypes';
 import { useBanner } from '../../contexts/BannerContext'; // Para fallback da fonte do banner
 

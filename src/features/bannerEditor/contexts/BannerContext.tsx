@@ -1,4 +1,4 @@
-import React, { createContext, useState, ReactNode, useContext, useRef } from 'react';
+import React, { createContext, useState, type ReactNode, useContext, useRef } from 'react';
 import type { BannerBlock } from '../types/bannerContentTypes'; // Ajuste o caminho se necessário
 
 // Cor padrão do canvas para a UI

@@ -1,4 +1,4 @@
-import React, { DragEvent } from 'react';
+import React, { type DragEvent } from 'react';
 import type { ImageContentBlock } from '../../types/bannerContentTypes';
 
 interface ImageBlockRendererProps {

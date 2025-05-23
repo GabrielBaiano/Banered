@@ -1,5 +1,5 @@
 // src/features/bannerEditor/EditorPage.tsx
-import React, { useState, useRef, useEffect, CSSProperties, DragEvent, ChangeEvent } from 'react';
+import React, { useState, useRef, useEffect, type CSSProperties, type DragEvent, type ChangeEvent } from 'react';
 import ControlPanel from './components/ControlPanel/ControlPanel';
 import type { BannerSettings } from './contexts/BannerContext'; // Importação de tipo
 import { BannerProvider, useBanner } from './contexts/BannerContext';

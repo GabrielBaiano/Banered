@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { type ChangeEvent } from 'react';
 import type { BannerBlock, TextContentBlock, ImageContentBlock } from '../../types/bannerContentTypes';
 import { useBanner } from '../../contexts/BannerContext';
 
