@@ -1,4 +1,4 @@
-import React, { useState, ReactNode } from 'react';
+import React, { useState, type ReactNode } from 'react';
 
 interface AccordionItemProps {
   title: string;
@@ -18,7 +18,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ title, children, initiall
       <button
         className={`accordion-header ${isOpen ? 'active' : ''}`}
         onClick={toggleOpen}
-        aria-expanded={isOpen} // Para acessibilidade
+        aria-expanded={isOpen}
       >
         {title}
       </button>

@@ -1,4 +1,3 @@
-import React from 'react';
 import EditorPage from './features/bannerEditor/EditorPage';
 
 function App() {
