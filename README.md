@@ -5,7 +5,7 @@
 <h1 align="center">Banered</h1>
 
 <p align="center">
-  <a href="https://github.com/GabrielBaiano/Banered" target="_blank">Projeto no GitHub</a>
+  <a href="/READMEen.md" target="_blank">English</a>
   &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="https://github.com/GabrielBaiano/Banered/issues/new?title=Sugest%C3%A3o%20de%20Melhoria%20para%20Banered&body=**Descreva%20sua%20ideia%20ou%20sugest%C3%A3o%20aqui%3A**%0A%0A%0A**Qual%20problema%20isso%20resolveria%3F**%0A%0A%0A**Alguma%20outra%20informa%C3%A7%C3%A3o%20relevante%3F**%0A" target="_blank">Reportar Bug / Sugestão</a>
   &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -16,4 +16,6 @@
 
 Banered é um editor de banners HTML interativo que permite criar e personalizar banners de forma visual e intuitiva. Arraste e solte elementos, edite textos, imagens, fundos e muito mais, com opções avançadas de exportação.
 
-**Confira o projeto em funcionamento [aqui](LINK_PARA_O_PROJETO_DEPLOYADO_OU_REPOSITORIO)!**
+**Confira o projeto em funcionamento [aqui](https://banered.vercel.app/)!**
+
+Old version [aqui](https://github.com/GabrielBaiano/Banner_generator)!**
