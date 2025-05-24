@@ -20,6 +20,6 @@
 
 Banered is an interactive HTML banner editor that allows you to create and customize banners visually and intuitively. Drag and drop elements, edit texts, images, backgrounds, and much more, with advanced export options.
 
-**Check out the project декоративный [here](https://banered.vercel.app/)!**
+**Check out the project [here](https://banered.vercel.app/)!**
 
 Old version [here](https://github.com/GabrielBaiano/Banner_generator)!**
