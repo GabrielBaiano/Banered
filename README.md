@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/src/assets/icon.png" alt="Banered Showcase" width="200"/>
+  <img src="https://github.com/GabrielBaiano/Banered/blob/main/src/assets/icon.png?raw=true" alt="Banered Showcase" width="200"/>
 </p>
 
 <h1 align="center">Banered</h1>
